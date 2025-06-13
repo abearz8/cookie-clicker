@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.stats {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--foreground);
+}
+
+.cookieButton {
+    font-size: 8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    padding: 1rem;
+    border-radius: 50%;
+    user-select: none;
+}
+
+.cookieButton:hover {
+    transform: scale(1.1);
+}
+
+.cookieButton:active {
+    transform: scale(0.95);
+}
+
+.upgradeButton {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: var(--foreground);
+    color: var(--gradient-start);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upgradeButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.upgradeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+} 

@@ -1,9 +1,10 @@
-import Image from "next/image";
+import CookieClicker from './components/CookieClicker';
 
 export default function Home() {
   return (
-    <div>
+    <main>
       <h1 className="game-title">Cookie Clicker</h1>
-    </div>
+      <CookieClicker />
+    </main>
   );
 }
