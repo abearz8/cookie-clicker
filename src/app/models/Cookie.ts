@@ -36,11 +36,4 @@ export class Cookie {
         }
         return false;
     }
-
-    // Reset game
-    reset(): void {
-        this.clicks = 0;
-        this.cookiesPerClick = 1;
-        this.totalCookies = 0;
-    }
 } 
