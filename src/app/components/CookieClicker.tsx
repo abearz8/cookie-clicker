@@ -14,8 +14,7 @@ export default function CookieClicker() {
     };
 
     const handleUpgrade = () => {
-        const upgradeCost = cookie.getCookiesPerClick() * 10;
-        if (cookie.upgradeCookiesPerClick(upgradeCost)) {
+        if (cookie.upgradeCookiesPerClick()) {
             forceUpdate({});
         }
     };
@@ -37,9 +36,9 @@ export default function CookieClicker() {
             <button 
                 className={styles.upgradeButton}
                 onClick={handleUpgrade}
-                disabled={cookie.getTotalCookies() < cookie.getCookiesPerClick() * 10}
+                disabled={cookie.getTotalCookies() < cookie.getCostOfNextUpgrade()}
             >
-                Upgrade ({cookie.getCookiesPerClick() * 10} cookies)
+                Upgrade ({cookie.getCostOfNextUpgrade()} cookies)
             </button>
         </div>
     );
