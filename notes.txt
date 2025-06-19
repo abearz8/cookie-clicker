@@ -1,0 +1,12 @@
+## TODO
+- Add autoclickers as purchasable button
+- Add grandmas as purchasable button
+- Add cookie mines as purchasable button
+- Save data (totalCookies, upgrades purchased)
+- Load data and update offline progression based on idle cookiesPerClick
+- Add developer controls that give infinate cookies but doesnt save data (can be toggled on and off)
+
+## Bugs & Issues
+- 
+
+## Last Updated: June 19, 2025

@@ -22,7 +22,7 @@ export default function CookieClicker() {
     return (
         <div className={styles.container}>
             <div className={styles.stats}>
-                <h2>Cookies: {cookie.getTotalCookies()}</h2>
+                <h2><b>Cookies: {cookie.getTotalCookies()}</b></h2>
                 <h3>Cookies per click: {cookie.getCookiesPerClick()}</h3>
             </div>
             
