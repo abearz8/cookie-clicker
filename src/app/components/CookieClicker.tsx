@@ -1,21 +1,22 @@
 'use client';
 
-import { useState } from 'react';
 import { Cookie } from '../models/Cookie';
 import styles from './CookieClicker.module.css';
 
-export default function CookieClicker() {
-    const [cookie] = useState<Cookie>(new Cookie());
-    const [, forceUpdate] = useState({});
+interface CookieClickerProps {
+    cookie: Cookie;
+    onUpdate: () => void;
+}
 
+export default function CookieClicker({ cookie, onUpdate }: CookieClickerProps) {
     const handleClick = () => {
         cookie.click();
-        forceUpdate({});
+        onUpdate();
     };
 
     const handleUpgrade = () => {
         if (cookie.upgradeCookiesPerClick()) {
-            forceUpdate({});
+            onUpdate();
         }
     };
 
