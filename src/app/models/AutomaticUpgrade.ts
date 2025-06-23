@@ -1,20 +1,18 @@
 export class AutomaticUpgrade {
-    private numberOfUpgrades: number;
     private costOfNext: number;
     private baseCPSPerUpgrade: number;
-    private cpsMultiplier: number;
-
+    
+    static numUpgrades: number = 0;
+    static cpsMultiplier: number = 1;
     static readonly UPGRADE_COST_MULTIPLIER = 1.15;
 
     constructor(startingCost: number, baseCPSPerUpgrade: number) {
         this.costOfNext = startingCost;
         this.baseCPSPerUpgrade = baseCPSPerUpgrade;
-        this.numberOfUpgrades = 0;
-        this.cpsMultiplier = 1;
     }
 
     getNumberOfUpgrades(): number {
-        return this.numberOfUpgrades;
+        return AutomaticUpgrade.numUpgrades;
     }
 
     getCostOfNext(): number {
@@ -22,22 +20,25 @@ export class AutomaticUpgrade {
     }
 
     getCPSPerUpgrade(): number {
-        return (this.baseCPSPerUpgrade * this.numberOfUpgrades) * this.cpsMultiplier;
+        return (this.baseCPSPerUpgrade * AutomaticUpgrade.numUpgrades) * AutomaticUpgrade.cpsMultiplier;
     }
 
-    buyUpgrade(cookies: number): void {
+    buyUpgrade(cookies: number, cookie: any): void {
         if(cookies < this.costOfNext) {
             return;
         }
         
-        this.numberOfUpgrades++;
-        this.costOfNext *= AutomaticUpgrade.UPGRADE_COST_MULTIPLIER;
-        if(this.numberOfUpgrades % 10 == 0) {
-            this.cpsMultiplier *= 2;
+        // Deduct the cost from cookies
+        cookie.totalCookies -= this.costOfNext;
+        
+        AutomaticUpgrade.numUpgrades++;
+        this.costOfNext = Math.floor(this.costOfNext * AutomaticUpgrade.UPGRADE_COST_MULTIPLIER);
+        if(AutomaticUpgrade.numUpgrades % 10 == 0) {
+            AutomaticUpgrade.cpsMultiplier *= 2;
         }
     }
 
     getPercentUntilNextCPSUpgrade(): number {
-        return (this.numberOfUpgrades % 10) / 10;
+        return (AutomaticUpgrade.numUpgrades % 10) / 10;
     }
 }

@@ -1,6 +1,8 @@
 export class Cookie {
     private clicks: number;
     private cookiesPerClick: number;
+    private numUpgrades: number;
+    private multiplier: number;
     private totalCookies: number;
     private costOfNextUpgrade: number;
 
@@ -9,6 +11,8 @@ export class Cookie {
         this.cookiesPerClick = 1;
         this.totalCookies = 0;
         this.costOfNextUpgrade = 10;
+        this.numUpgrades = 1;
+        this.multiplier = 1;
     }
 
     // Getters
@@ -21,7 +25,7 @@ export class Cookie {
     }
 
     getCookiesPerClick(): number {
-        return this.cookiesPerClick;
+        return this.cookiesPerClick * this.multiplier;
     }
 
     getTotalCookies(): number {
@@ -31,16 +35,24 @@ export class Cookie {
     // Methods
     click(): void {
         this.clicks++;
-        this.totalCookies += this.cookiesPerClick;
+        this.totalCookies += this.cookiesPerClick * this.multiplier;
     }
 
     upgradeCookiesPerClick(): boolean {
         if (this.totalCookies >= this.costOfNextUpgrade) {
             this.totalCookies -= this.costOfNextUpgrade;
-            this.cookiesPerClick += 1;
             this.costOfNextUpgrade *= 2;
+            this.cookiesPerClick += this.multiplier;
+            if(this.numUpgrades % 4 == 0) {
+                this.multiplier *= 2;
+            } 
+            this.numUpgrades++;
             return true;
         }
         return false;
+    }
+
+    addCookies(amount: number): void {
+        this.totalCookies += amount;
     }
 } 

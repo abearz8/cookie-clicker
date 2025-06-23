@@ -8,22 +8,30 @@ interface AutomaticUpgradeProps {
     startingCost: number;
     baseCPSPerUpgrade: number;
     cookies: number;
+    cookie: Cookie;
+    onUpdate: () => void;
+    upgradeCount: number;
+    onUpgradePurchased: () => void;
 }
 
 export default function AutomaticUpgrade({ 
     icon, 
     startingCost, 
     baseCPSPerUpgrade,
-    cookies
+    cookies,
+    cookie,
+    onUpdate,
+    upgradeCount,
+    onUpgradePurchased
 }: AutomaticUpgradeProps) {
     const [upgrade] = useState<AutomaticUpgradeModel>(() => {
         return new AutomaticUpgradeModel(startingCost, baseCPSPerUpgrade);
     });
-    const [, forceUpdate] = useState({});
 
     const handleBuyUpgrade = () => {
-        upgrade.buyUpgrade(cookies);
-        forceUpdate({});
+        upgrade.buyUpgrade(cookies, cookie);
+        onUpgradePurchased();
+        onUpdate();
     }
 
     const cost = upgrade.getCostOfNext();
@@ -45,7 +53,7 @@ export default function AutomaticUpgrade({
                         Cost: {formattedCost} cookies
                     </div>
                     <div className={styles.ownedText}>
-                        Owned: {upgrade.getNumberOfUpgrades()}
+                        Owned: {upgradeCount}
                     </div>
                 </div>
             </div>
