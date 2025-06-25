@@ -10,6 +10,7 @@
     text-align: center;
     font-size: 1.5rem;
     color: var(--foreground);
+    min-width: 300px;
 }
 
 .cookieButton {

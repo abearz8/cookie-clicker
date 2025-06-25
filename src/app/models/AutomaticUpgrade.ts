@@ -1,18 +1,29 @@
 export class AutomaticUpgrade {
-    private costOfNext: number;
+    public costOfNext: number;
     private baseCPSPerUpgrade: number;
-    
-    static numUpgrades: number = 0;
-    static cpsMultiplier: number = 1;
-    static readonly UPGRADE_COST_MULTIPLIER = 1.15;
+    public numUpgrades: number;
+    public cpsMultiplier: number;
+    private readonly UPGRADE_COST_MULTIPLIER = 1.15;
 
     constructor(startingCost: number, baseCPSPerUpgrade: number) {
         this.costOfNext = startingCost;
         this.baseCPSPerUpgrade = baseCPSPerUpgrade;
+        this.numUpgrades = 0;
+        this.cpsMultiplier = 1;
+    }
+
+    loadFromSave(data: {
+        numUpgrades: number;
+        costOfNext: number;
+        cpsMultiplier: number;
+    }) {
+        this.numUpgrades = data.numUpgrades;
+        this.costOfNext = data.costOfNext;
+        this.cpsMultiplier = data.cpsMultiplier;
     }
 
     getNumberOfUpgrades(): number {
-        return AutomaticUpgrade.numUpgrades;
+        return this.numUpgrades;
     }
 
     getCostOfNext(): number {
@@ -20,25 +31,30 @@ export class AutomaticUpgrade {
     }
 
     getCPSPerUpgrade(): number {
-        return (this.baseCPSPerUpgrade * AutomaticUpgrade.numUpgrades) * AutomaticUpgrade.cpsMultiplier;
+        return this.baseCPSPerUpgrade * this.cpsMultiplier;
     }
 
-    buyUpgrade(cookies: number, cookie: any): void {
+    getTotalCPS(): number {
+        return this.numUpgrades * this.getCPSPerUpgrade();
+    }
+
+    buyUpgrade(cookies: number, cookie: any): boolean {
         if(cookies < this.costOfNext) {
-            return;
+            return false;
         }
         
-        // Deduct the cost from cookies
         cookie.totalCookies -= this.costOfNext;
+        this.numUpgrades++;
+        this.costOfNext = Math.floor(this.costOfNext * this.UPGRADE_COST_MULTIPLIER);
         
-        AutomaticUpgrade.numUpgrades++;
-        this.costOfNext = Math.floor(this.costOfNext * AutomaticUpgrade.UPGRADE_COST_MULTIPLIER);
-        if(AutomaticUpgrade.numUpgrades % 10 == 0) {
-            AutomaticUpgrade.cpsMultiplier *= 2;
+        if(this.numUpgrades % 10 === 0) {
+            this.cpsMultiplier *= 2;
         }
+        
+        return true;
     }
 
     getPercentUntilNextCPSUpgrade(): number {
-        return (AutomaticUpgrade.numUpgrades % 10) / 10;
+        return (this.numUpgrades % 10) / 10;
     }
 }

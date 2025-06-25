@@ -1,17 +1,20 @@
 'use client';
 
 import { Cookie } from '../models/Cookie';
+import { AutomaticUpgrade } from '../models/AutomaticUpgrade';
 import styles from './CookieClicker.module.css';
 
 interface CookieClickerProps {
     cookie: Cookie;
     onUpdate: () => void;
-    autoclickerCount: number;
-    grandmaCount: number;
-    mineCount: number;
+    upgrades: {
+        autoclicker: AutomaticUpgrade;
+        grandma: AutomaticUpgrade;
+        mine: AutomaticUpgrade;
+    };
 }
 
-export default function CookieClicker({ cookie, onUpdate, autoclickerCount, grandmaCount, mineCount }: CookieClickerProps) {
+export default function CookieClicker({ cookie, onUpdate, upgrades }: CookieClickerProps) {
     const handleClick = () => {
         cookie.click();
         onUpdate();
@@ -23,11 +26,9 @@ export default function CookieClicker({ cookie, onUpdate, autoclickerCount, gran
         }
     };
 
-    // Calculate total CPS from all upgrades
-    const autoclickerCPS = autoclickerCount * 1;
-    const grandmaCPS = grandmaCount * 5;
-    const mineCPS = mineCount * 25;
-    const totalCPS = autoclickerCPS + grandmaCPS + mineCPS;
+    const totalCPS = Object.values(upgrades).reduce((sum, upgrade) => 
+        sum + upgrade.getTotalCPS(), 0
+    );
 
     return (
         <div className={styles.container}>

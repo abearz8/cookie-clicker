@@ -1,41 +1,25 @@
-import {useState} from 'react';
 import { AutomaticUpgrade as AutomaticUpgradeModel } from '../models/AutomaticUpgrade';
-import { Cookie } from '../models/Cookie';
 import styles from './AutomaticUpgrade.module.css';
 
 interface AutomaticUpgradeProps {
     icon: string;
-    startingCost: number;
-    baseCPSPerUpgrade: number;
+    upgrade: AutomaticUpgradeModel;
     cookies: number;
-    cookie: Cookie;
-    onUpdate: () => void;
-    upgradeCount: number;
-    onUpgradePurchased: () => void;
+    onPurchase: () => void;
 }
 
 export default function AutomaticUpgrade({ 
     icon, 
-    startingCost, 
-    baseCPSPerUpgrade,
+    upgrade,
     cookies,
-    cookie,
-    onUpdate,
-    upgradeCount,
-    onUpgradePurchased
+    onPurchase
 }: AutomaticUpgradeProps) {
-    const [upgrade] = useState<AutomaticUpgradeModel>(() => {
-        return new AutomaticUpgradeModel(startingCost, baseCPSPerUpgrade);
-    });
-
     const handleBuyUpgrade = () => {
-        upgrade.buyUpgrade(cookies, cookie);
-        onUpgradePurchased();
-        onUpdate();
+        onPurchase();
     }
 
     const cost = upgrade.getCostOfNext();
-    const formattedCost = isNaN(cost) ? startingCost : Math.floor(cost);
+    const formattedCost = isNaN(cost) ? 0 : Math.floor(cost);
 
     return (
         <div className={styles.container}>
@@ -53,7 +37,7 @@ export default function AutomaticUpgrade({
                         Cost: {formattedCost} cookies
                     </div>
                     <div className={styles.ownedText}>
-                        Owned: {upgradeCount}
+                        Owned: {upgrade.getNumberOfUpgrades()}
                     </div>
                 </div>
             </div>

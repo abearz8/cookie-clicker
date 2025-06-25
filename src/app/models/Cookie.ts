@@ -1,13 +1,11 @@
 export class Cookie {
-    private clicks: number;
-    private cookiesPerClick: number;
-    private numUpgrades: number;
-    private multiplier: number;
-    private totalCookies: number;
-    private costOfNextUpgrade: number;
+    public cookiesPerClick: number;
+    public numUpgrades: number;
+    public multiplier: number;
+    public totalCookies: number;
+    public costOfNextUpgrade: number;
 
     constructor() {
-        this.clicks = 0;
         this.cookiesPerClick = 1;
         this.totalCookies = 0;
         this.costOfNextUpgrade = 10;
@@ -15,11 +13,21 @@ export class Cookie {
         this.multiplier = 1;
     }
 
-    // Getters
-    getClicks(): number {
-        return this.clicks;
+    loadFromSave(data: {
+        cookies: number;
+        cookiesPerClick: number;
+        numUpgrades: number;
+        multiplier: number;
+        costOfNextUpgrade: number;
+    }) {
+        this.totalCookies = data.cookies;
+        this.cookiesPerClick = data.cookiesPerClick;
+        this.numUpgrades = data.numUpgrades;
+        this.multiplier = data.multiplier;
+        this.costOfNextUpgrade = data.costOfNextUpgrade;
     }
 
+    // Getters
     getCostOfNextUpgrade(): number {
         return this.costOfNextUpgrade;
     }
@@ -34,8 +42,7 @@ export class Cookie {
 
     // Methods
     click(): void {
-        this.clicks++;
-        this.totalCookies += this.cookiesPerClick * this.multiplier;
+        this.totalCookies += this.getCookiesPerClick();
     }
 
     upgradeCookiesPerClick(): boolean {
@@ -43,7 +50,8 @@ export class Cookie {
             this.totalCookies -= this.costOfNextUpgrade;
             this.costOfNextUpgrade *= 2;
             this.cookiesPerClick += this.multiplier;
-            if(this.numUpgrades % 4 == 0) {
+            
+            if(this.numUpgrades % 3 === 0) {
                 this.multiplier *= 2;
             } 
             this.numUpgrades++;
