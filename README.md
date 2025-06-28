@@ -6,10 +6,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 This web application is based on the famous "Cookie Clicker" game that I grew up playing and wanted to replicate.
 
 ## How to run
-First, run the development server:
+First, pull or downoad the repository to your local machine. 
+Then, navigate to the directory
+Then, run the development server:
 ```bash
 npm run dev
 ```
+Finally, open localhost
 
 Then open [http://localhost:3000](http://localhost:3000) with your browser to see the result
 
