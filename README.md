@@ -7,7 +7,9 @@ This web application is based on the famous "Cookie Clicker" game that I grew up
 
 ## How to run
 First, pull or downoad the repository to your local machine. 
+
 Then, navigate to the directory
+
 Then, run the development server:
 ```bash
 npm run dev
