@@ -1,3 +1,5 @@
+## [Link to app](https://cookie-clicker-lovat.vercel.app/)
+
 ## Description
 This is a learning project for me, the developer, with the goal of practicing documentation practices in the software developing process, and learning how to write next.js and practice using tools such as Cursor and Git repositories.
 
